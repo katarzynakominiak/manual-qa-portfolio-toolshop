@@ -42,7 +42,7 @@ application work as expected, and document any defects found.
 | Item | Value |
 |---|---|
 | URL | https://practicesoftwaretesting.com/ |
-| Browsers | Chrome [version], Firefox [version] |
+| Browsers | Chrome [156.0.8078.80], Firefox [159.0] |
 | OS | Windows 11 |
 | Viewports | 1920x1080, 390x844 |
 
