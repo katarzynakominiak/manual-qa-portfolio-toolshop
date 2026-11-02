@@ -7,19 +7,19 @@ Failed cases link to the corresponding defect report.
 
 | ID | Title | Preconditions | Steps | Expected result | Status | Defect |
 |---|---|---|---|---|---|---|
-| TC-001 | Register with valid data | User is logged out | 1. Open registration page<br>2. Fill all required fields with valid data<br>3. Submit | Account is created and the user can log in | Not run | |
-| TC-002 | Register with an already used e-mail | An account with this e-mail exists | 1. Open registration page<br>2. Enter the existing e-mail<br>3. Submit | Validation message informs that the e-mail is already in use; no account created | Not run | |
-| TC-003 | Log in with valid credentials | A registered account exists | 1. Open login page<br>2. Enter valid credentials<br>3. Submit | User is logged in and redirected to the account area | Not run | |
-| TC-004 | Log in with an invalid password | A registered account exists | 1. Open login page<br>2. Enter a valid e-mail and a wrong password<br>3. Submit | Login is rejected with a clear error message; no indication of which field was wrong | Not run | |
+| TC-001 | Register with valid data | User is logged out | 1. Open registration page<br>2. Fill all required fields with valid data<br>3. Submit | Account is created and the user can log in | Pass | |
+| TC-002 | Register with an already used e-mail | An account with this e-mail exists | 1. Open registration page<br>2. Enter the existing e-mail<br>3. Submit | Validation message informs that the e-mail is already in use; no account created | Pass | |
+| TC-003 | Log in with valid credentials | A registered account exists | 1. Open login page<br>2. Enter valid credentials<br>3. Submit | User is logged in and redirected to the account area | Pass | |
+| TC-004 | Log in with an invalid password | A registered account exists | 1. Open login page<br>2. Enter a valid e-mail and a wrong password<br>3. Submit | Login is rejected with a clear error message; no indication of which field was wrong | Pass | |
 
 ## Product catalogue and filtering
 
 | ID | Title | Preconditions | Steps | Expected result | Status | Defect |
 |---|---|---|---|---|---|---|
-| TC-010 | Filter by a single category | Home page is open | 1. Select one category filter | Only products from that category are displayed | Not run | |
-| TC-011 | Combine category and brand filters | Home page is open | 1. Select a category<br>2. Select a brand | Only products matching both criteria are displayed | Not run | |
-| TC-012 | Price range filter boundaries | Home page is open | 1. Set the price range to the lowest possible values | Only products within the range are displayed; no product above the maximum appears | Not run | |
-| TC-013 | Sorting | Home page is open | 1. Apply each available sort option | Products are ordered correctly for each option | Not run | |
+| TC-010 | Filter by a single category | Home page is open | 1. Select one category filter | Only products from that category are displayed | Pass| BUG -001|
+| TC-011 | Combine category and brand filters | Home page is open | 1. Select a category<br>2. Select a brand | Only products matching both criteria are displayed| Pass| |
+| TC-012 | Price range filter boundaries | Home page is open | 1. Set the price range to the lowest possible values | Only products within the range are displayed; no product above the maximum appears |  Pass| |
+| TC-013 | Sorting | Home page is open | 1. Apply each available sort option | Products are ordered correctly for each option | Pass | |
 
 ## Search
 
