@@ -104,6 +104,11 @@ This distinction matters for triage. Even if the address data set is intentional
 for demonstration purposes, a response that places Zielona Góra in śląskie or Włocławek in
 świętokrzyskie is incorrect on its own terms, without reference to any external directory.
 
+The same postcode lookup is used on the Billing Address step of the checkout flow, where it
+returns incorrect city and state values in the same way. The defect is therefore not confined
+to the registration form — it affects every place in the application where an address is
+entered.
+
 ## Additional information
 
 - **Reproducibility:** always — the response is deterministic for a given postal code
