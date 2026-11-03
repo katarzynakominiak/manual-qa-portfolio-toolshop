@@ -32,10 +32,10 @@ Failed cases link to the corresponding defect report.
 
 | ID | Title | Preconditions | Steps | Expected result | Status | Defect |
 |---|---|---|---|---|---|---|
-| TC-030 | Add a product to the cart | A product detail page is open | 1. Add the product to the cart | The cart counter increases and the product is listed in the cart | Not run | |
-| TC-031 | Change quantity in the cart | The cart contains one product | 1. Change the quantity<br>2. Observe the total | The line total and order total are recalculated correctly | Not run | |
-| TC-032 | Remove a product from the cart | The cart contains a product | 1. Remove the product | The product is removed and the total is updated | Not run | |
-| TC-033 | Complete the checkout flow | The cart contains a product and the user is logged in | 1. Open the cart<br>2. Go through every checkout step<br>3. Place the order | The order is placed and a confirmation is displayed | Not run | |
+| TC-030 | Add a product to the cart | A product detail page is open | 1. Add the product to the cart | The cart counter increases and the product is listed in the cart | Pass| |
+| TC-031 | Change quantity in the cart | The cart contains one product | 1. Change the quantity<br> 2. Observe the total | The line total and order total are recalculated correctly | Not run |bug |
+| TC-032 | Remove a product from the cart | The cart contains a product | 1. Remove the product | The product is removed and the total is updated | Pass| |
+| TC-033 | Complete the checkout flow | The cart contains a product and the user is logged in | 1. Open the cart<br> 2. Go through every checkout step<br> 3. Place the order | The order is placed and a confirmation is displayed | Not run| bug
 
 ## Contact form
 
