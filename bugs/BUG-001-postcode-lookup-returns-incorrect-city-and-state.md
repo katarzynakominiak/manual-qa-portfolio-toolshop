@@ -4,12 +4,13 @@
 |---|---|
 | **Severity** | Minor |
 | **Priority** | High |
-| **Area** | Registration / Address autofill (postcode lookup API) |
+| **Area** | Address autofill (postcode lookup API) — registration and checkout |
 | **Environment** | Chrome 156.0.8078.80, Windows 11, maximised window on a 2560x1440 display |
-| **URL** | https://practicesoftwaretesting.com/auth/register |
+| **URL** |  https://practicesoftwaretesting.com/auth/register and /checkout (Billing Address step) |
 | **API endpoint** | `GET https://api.practicesoftwaretesting.com/postcode-lookup` |
 | **Reported** | 2026-11-02 |
-| **Related test case** | TC-001 |
+| **Related test case** | TC-001, TC-033 |
+| **Related defect** | BUG-008 — the billing address is not prefilled, so this lookup is used on every order |
 
 ## Summary
 

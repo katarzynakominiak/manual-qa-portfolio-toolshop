@@ -1,16 +1,16 @@
 # BUG-008 — Billing address is not prefilled from the saved profile address and is not retained between orders
 
-| Field | Value |
-|---|---|
-| **Severity** | Minor |
-| **Priority** | Medium |
-| **Area** | Checkout / Billing address |
-| **Environment** | Chrome 156.0.8078.80, Windows 11, maximised window on a 2560x1440 display |
-| **URL** | https://practicesoftwaretesting.com/checkout |
-| **Application version** | v2.5, built 2026-10-11, Angular 20.0.5 |
-| **Reported** | 2026-11-03 |
-| **Related test case** | TC-033 |
-| **Related defect** | BUG-001 — the same postcode lookup is used on this step |
+| Field                   | Value                                                                     |
+| ----------------------- | ------------------------------------------------------------------------- |
+| **Severity**            | Minor                                                                     |
+| **Priority**            | Medium                                                                    |
+| **Area**                | Checkout / Billing address                                                |
+| **Environment**         | Chrome 156.0.8078.80, Windows 11, maximised window on a 2560x1440 display |
+| **URL**                 | https://practicesoftwaretesting.com/checkout                              |
+| **Application version** | v2.5, built 2026-10-11, Angular 20.0.5                                    |
+| **Reported**            | 2026-11-03                                                                |
+| **Related test case**   | TC-033                                                                    |
+| **Related defect**      | BUG-001 — the same postcode lookup is used on this step                   |
 
 ## Summary
 
@@ -62,7 +62,7 @@ not the result of a failed lookup — the saved address is never requested.
 ## Additional information
 
 - Reproducibility: always — confirmed across two consecutive orders on the same account
-- Browsers affected: [Chrome / Chrome and Firefox — confirm in a second browser]
+- Browsers affected: Chrome and Firefox — identical response in both, confirming the defect
 - Console errors: none
 - No request for profile or address data is made when the Billing Address step loads, so
   the application does not attempt to retrieve the saved address at all
@@ -94,8 +94,8 @@ hand — on every order.
 
 ![Billing Address step showing all fields empty while the user is signed in](../screenshots/bug-008-billing-address-empty.png)
 
-*The user is signed in and has a saved address, yet every field is empty.*
+_The user is signed in and has a saved address, yet every field is empty._
 
 ![User profile showing the saved address](../screenshots/bug-008-profile-address-saved.png)
 
-*The same address fields are stored on the profile.*
+_The same address fields are stored on the profile._
