@@ -33,22 +33,26 @@ planning, test design, execution, defect reporting and a final report.
 
 | Item | Value |
 |---|---|
-| Application | https://practicesoftwaretesting.com/ |
-| Browsers | Chrome [version], Firefox [version] |
+| Application | https://practicesoftwaretesting.com/ (v2.5, Angular 20.0.5)  |
+| Browsers | Chrome 156.0.8078.80, Firefox 159.0 |
 | Operating system | Windows 11 |
-| Devices | Desktop 1920x1080, mobile viewport 390x844 |
-| Test period | [start] – [end] |
+| Devices | Desktop 2560x1440, 100% scaling, mobile viewport 390x844 |
+| Test period | 2026-11-02 – 2026-11-04 |
 
 ## Summary of results
 
 | Metric | Value |
 |---|---|
-| Test cases executed | [n] |
-| Passed / Failed | [n] / [n] |
-| Defects reported | [n] |
-| Critical / Major / Minor | [n] / [n] / [n] |
+| Test cases executed | 8 of 17 |
+| Passed / Failed | 8 / 0 |
+| Defects reported | 10 |
+| Critical / Major / Minor | 0 / 2 / 8 |
 
-See the [final test report](docs/test-report.md) for details.
+Nine test cases are covered by the automated suite rather than executed manually — see the
+[test cases](docs/test-cases.md) for how coverage is split.
+
+See the [final test report](docs/test-report.md) for coverage, defect patterns and
+recommendations.
 
 ## About
 

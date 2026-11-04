@@ -3,6 +3,12 @@
 Status values: `Pass`, `Fail`, `Blocked`, `Not run`.
 Failed cases link to the corresponding defect report.
 
+Coverage is split between manual and automated testing. Registration, the cart and the
+checkout flow were executed manually, because they involve judgement about what the user is
+shown and when. The catalogue, search and contact form are covered by the automated suite in
+`tests/` — they are data-driven and repetitive, which automation exercises more thoroughly
+than a person does. Cases marked `Not run` below are covered there, not skipped.
+
 ## Registration and login
 
 | ID | Title | Preconditions | Steps | Expected result | Status | Defect |
@@ -13,6 +19,7 @@ Failed cases link to the corresponding defect report.
 | TC-004 | Log in with an invalid password | A registered account exists | 1. Open login page<br>2. Enter a valid e-mail and a wrong password<br>3. Submit | Login is rejected with a clear error message; no indication of which field was wrong | Pass | |
 
 ## Product catalogue and filtering
+> Covered by the automated suite — see `tests/`.
 
 | ID | Title | Preconditions | Steps | Expected result | Status | Defect |
 |---|---|---|---|---|---|---|
@@ -22,6 +29,7 @@ Failed cases link to the corresponding defect report.
 | TC-013 | Sorting | Home page is open | 1. Apply each available sort option | Products are ordered correctly for each option | Not run| |
 
 ## Search
+> Covered by the automated suite — see `tests/`.
 
 | ID | Title | Preconditions | Steps | Expected result | Status | Defect |
 |---|---|---|---|---|---|---|
@@ -38,6 +46,7 @@ Failed cases link to the corresponding defect report.
 | TC-033 | Complete the checkout flow | The cart contains a product and the user is logged in | 1. Open the cart<br> 2. Go through every checkout step<br> 3. Place the order | The order is placed and a confirmation is displayed | Pass| BUG-006, BUG-007, BUG-008
 
 ## Contact form
+> Covered by the automated suite — see `tests/`.
 
 | ID | Title | Preconditions | Steps | Expected result | Status | Defect |
 |---|---|---|---|---|---|---|
