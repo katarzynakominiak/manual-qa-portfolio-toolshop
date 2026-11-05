@@ -1,11 +1,10 @@
 import { Locator, Page } from "@playwright/test";
-
 export interface ContactFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  subject: string;
-  message: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
 }
 
 export class ContactPage {
@@ -16,11 +15,7 @@ export class ContactPage {
   messageInput: Locator;
   sendButton: Locator;
   confirmationMessage: Locator;
-  firstNameErrorLocator: Locator;
-  lastNameErrorLocator: Locator;
-  emailErrorLocator: Locator;
-  subjectErrorLocator: Locator;
-  messageErrorLocator: Locator;
+  errors: Record<keyof ContactFormData, Locator>;
 
   constructor(private page: Page) {
     this.firstNameInput = this.page.getByTestId("first-name");
@@ -33,17 +28,24 @@ export class ContactPage {
     // Role "alert" is shared with the field validation messages, so the success
     // message is located by its semantic class instead.
 
-    this.firstNameErrorLocator = this.page.getByTestId("first-name-error");
-    this.lastNameErrorLocator = this.page.getByTestId("last-name-error");
-    this.emailErrorLocator = this.page.getByTestId("email-error");
-    this.subjectErrorLocator = this.page.getByTestId("subject-error");
-    this.messageErrorLocator = this.page.getByTestId("message-error");
+    this.errors = {
+      firstName: this.page.getByTestId("first-name-error"),
+      lastName: this.page.getByTestId("last-name-error"),
+      email: this.page.getByTestId("email-error"),
+      subject: this.page.getByTestId("subject-error"),
+      message: this.page.getByTestId("message-error"),
+    };
   }
+  // Fields are optional so that a test can deliberately omit one. A field that is
+  // not present in `data` is left untouched rather than cleared.
   async fillForm(data: ContactFormData): Promise<void> {
-    await this.firstNameInput.fill(data.firstName);
-    await this.lastNameInput.fill(data.lastName);
-    await this.emailInput.fill(data.email);
-    await this.subjectInput.selectOption(data.subject);
-    await this.messageInput.fill(data.message);
+    if (data.firstName !== undefined)
+      await this.firstNameInput.fill(data.firstName);
+    if (data.lastName !== undefined)
+      await this.lastNameInput.fill(data.lastName);
+    if (data.email !== undefined) await this.emailInput.fill(data.email);
+    if (data.subject !== undefined)
+      await this.subjectInput.selectOption(data.subject);
+    if (data.message !== undefined) await this.messageInput.fill(data.message);
   }
 }
