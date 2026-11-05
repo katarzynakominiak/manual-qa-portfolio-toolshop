@@ -1,51 +1,30 @@
 import { test, expect } from "@playwright/test";
+import { contactData } from "../../test-data/contact.data";
+import { ContactPage } from "../../pages/contacts.page";
 
 test.describe("contact form", () => {
+  let contactPage: ContactPage;
   test.beforeEach(async ({ page }) => {
+    contactPage = new ContactPage(page);
     await page.goto("/contact");
   });
-  test("submits successfully with valid data", async ({ page }) => {
+  test("submits successfully with valid data", async () => {
     // Arrange
-    const firstNameLocator = page.getByTestId("first-name");
-    const lastNameLocator = page.getByTestId("last-name");
-    const emailLocator = page.getByTestId("email");
-    const subjectLocator = page.getByTestId("subject");
-    const messageLocator = page.getByTestId("message");
-    const buttonLocator = page.getByTestId("contact-submit");
-    const confirmationMessageLocator = page.getByRole("alert");
-
-    const firstName = "Morrigan";
-    const lastName = "Aesland";
-    const email = "test123@example.com";
-    const subject = "customer-service";
-    const message =
-      "I would like to ask about the availability of the Claw Hammer. Could you let me know when it will be back in stock?";
     const confirmationMessage =
       "Thanks for your message! We will contact you shortly.";
 
     // Act
-
-    await firstNameLocator.fill(firstName);
-    await lastNameLocator.fill(lastName);
-    await emailLocator.fill(email);
-    await subjectLocator.selectOption(subject);
-    await messageLocator.fill(message);
-    await buttonLocator.click();
+    await contactPage.fillForm(contactData.valid);
+    await contactPage.sendButton.click();
 
     // Assert
-    await expect(confirmationMessageLocator).toHaveText(confirmationMessage);
+    await expect(contactPage.confirmationMessage).toHaveText(
+      confirmationMessage,
+    );
   });
-  test("shows a validation error for every required field when submitted empty", async ({
-    page,
-  }) => {
-    // Arrange
-    const buttonLocator = page.getByTestId("contact-submit");
-    const firstNameErrorLocator = page.getByTestId("first-name-error");
-    const lastNameErrorLocator = page.getByTestId("last-name-error");
-    const emailErrorLocator = page.getByTestId("email-error");
-    const subjectErrorLocator = page.getByTestId("subject-error");
-    const messageErrorLocator = page.getByTestId("message-error");
 
+  test("shows a validation error for every required field when submitted empty", async () => {
+    // Arrange
     const firstNameError = "First name is required";
     const lastNameError = "Last name is required";
     const emailError = "Email is required";
@@ -53,15 +32,16 @@ test.describe("contact form", () => {
     const messageError = "Message is required";
 
     // Act
-    await buttonLocator.click();
+
+    await contactPage.sendButton.click();
 
     // Asserts
-    await expect(firstNameErrorLocator).toHaveText(firstNameError);
-    await expect(lastNameErrorLocator).toHaveText(lastNameError);
-    await expect(emailErrorLocator).toHaveText(emailError);
-    await expect(subjectErrorLocator).toHaveText(subjectError);
-    await expect(messageErrorLocator).toHaveText(messageError);
+    await expect(contactPage.firstNameErrorLocator).toHaveText(firstNameError);
+    await expect(contactPage.lastNameErrorLocator).toHaveText(lastNameError);
+    await expect(contactPage.emailErrorLocator).toHaveText(emailError);
+    await expect(contactPage.subjectErrorLocator).toHaveText(subjectError);
+    await expect(contactPage.messageErrorLocator).toHaveText(messageError);
 
-    await expect(page.getByText("Thanks for your message")).toBeHidden();
+    await expect(contactPage.confirmationMessage).toBeHidden();
   });
 });
