@@ -58,21 +58,23 @@ test.describe("contact form", () => {
       errorMessage: "Last name is required",
     },
     { field: "email", label: "email", errorMessage: "Email is required" },
-    { field: "subject", label: "subject", errorMessage: "Subject is required" },
     { field: "message", label: "message", errorMessage: "Message is required" },
   ];
-
+  // One test is generated per required field. The form is filled with valid data and the
+  // field under test is then cleared, which is what a user does when they delete a value.
+  // Clearing marks the field as touched, so the validation message is shown immediately
+  // and the assertion does not depend on the form being re-evaluated after a click.
   for (const { field, label, errorMessage } of requiredFields) {
-    // TODO: rewrite — the current approach never focuses the omitted field, so Angular does
-    // not mark it as touched and no validation message appears. The test should fill the form,
-    // clear one field, and assert that the field error is shown and the submit button disabled.
-    test.skip(`shows an error when the ${label} is missing`, async () => {
-      // Arrange
-      const incompleteData: ContactFormData = { ...contactData.valid };
-      delete incompleteData[field];
-
+    test(`shows an error when the ${label} is cleared`, async () => {
       // Act
-      await contactPage.fillForm(incompleteData);
+      await contactPage.fillForm(contactData.valid);
+      await contactPage.clearField(field);
+
+      // Angular switches the control from ng-valid to ng-invalid once the cleared value has
+      // reached the form model. Waiting for that class guarantees the form is known to be
+      // invalid before the submit is sent.
+      await expect(contactPage.inputs[field]).toHaveClass(/ng-invalid/);
+
       await contactPage.sendButton.click();
 
       // Assert

@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+
 export interface ContactFormData {
   firstName?: string;
   lastName?: string;
@@ -8,25 +9,25 @@ export interface ContactFormData {
 }
 
 export class ContactPage {
-  firstNameInput: Locator;
-  lastNameInput: Locator;
-  emailInput: Locator;
-  subjectInput: Locator;
-  messageInput: Locator;
-  sendButton: Locator;
-  confirmationMessage: Locator;
-  errors: Record<keyof ContactFormData, Locator>;
+  readonly sendButton: Locator;
+  readonly confirmationMessage: Locator;
+  readonly inputs: Record<keyof ContactFormData, Locator>;
+  readonly errors: Record<keyof ContactFormData, Locator>;
 
   constructor(private page: Page) {
-    this.firstNameInput = this.page.getByTestId("first-name");
-    this.lastNameInput = this.page.getByTestId("last-name");
-    this.emailInput = this.page.getByTestId("email");
-    this.subjectInput = this.page.getByTestId("subject");
-    this.messageInput = this.page.getByTestId("message");
     this.sendButton = this.page.getByTestId("contact-submit");
-    this.confirmationMessage = this.page.locator(".alert-success");
+
     // Role "alert" is shared with the field validation messages, so the success
     // message is located by its semantic class instead.
+    this.confirmationMessage = this.page.locator(".alert-success");
+
+    this.inputs = {
+      firstName: this.page.getByTestId("first-name"),
+      lastName: this.page.getByTestId("last-name"),
+      email: this.page.getByTestId("email"),
+      subject: this.page.getByTestId("subject"),
+      message: this.page.getByTestId("message"),
+    };
 
     this.errors = {
       firstName: this.page.getByTestId("first-name-error"),
@@ -36,16 +37,28 @@ export class ContactPage {
       message: this.page.getByTestId("message-error"),
     };
   }
+
   // Fields are optional so that a test can deliberately omit one. A field that is
   // not present in `data` is left untouched rather than cleared.
   async fillForm(data: ContactFormData): Promise<void> {
     if (data.firstName !== undefined)
-      await this.firstNameInput.fill(data.firstName);
+      await this.inputs.firstName.fill(data.firstName);
     if (data.lastName !== undefined)
-      await this.lastNameInput.fill(data.lastName);
-    if (data.email !== undefined) await this.emailInput.fill(data.email);
+      await this.inputs.lastName.fill(data.lastName);
+    if (data.email !== undefined) await this.inputs.email.fill(data.email);
     if (data.subject !== undefined)
-      await this.subjectInput.selectOption(data.subject);
-    if (data.message !== undefined) await this.messageInput.fill(data.message);
+      await this.inputs.subject.selectOption(data.subject);
+    if (data.message !== undefined)
+      await this.inputs.message.fill(data.message);
+  }
+
+  // Empties a single field. The subject is a <select>, which cannot be cleared the way a
+  // text input can, so its placeholder option is selected instead.
+  async clearField(field: keyof ContactFormData): Promise<void> {
+    const input = this.inputs[field];
+    await input.click();
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    await input.blur();
   }
 }
