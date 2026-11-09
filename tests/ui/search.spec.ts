@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { searchData } from "../test-data/search.data";
-import { SearchComponent } from "../pages/search.page";
+import { searchData } from "../../test-data/search.data";
+import { SearchComponent } from "../../pages/search.page";
 
 test.describe("search function", () => {
   let searchComponent: SearchComponent;

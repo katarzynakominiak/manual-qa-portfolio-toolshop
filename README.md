@@ -17,6 +17,7 @@ planning, test design, execution, defect reporting and a final report.
 | [`bugs/`](bugs/) | Individual defect reports |
 | [`docs/test-report.md`](docs/test-report.md) | Final summary: coverage, defect statistics, quality risks |
 | [`screenshots/`](screenshots/) | Evidence attached to defect reports |
+| [`tests/`](tests/) | Automated Playwright suite — see its [README](tests/README.md) for coverage and design notes |
 
 ## Scope of testing
 
