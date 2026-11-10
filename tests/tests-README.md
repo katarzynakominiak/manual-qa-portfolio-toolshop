@@ -97,8 +97,11 @@ first page and was confirmed manually on the others.
 same application, who create products, brands and accounts in it. Tests assert that a specific
 product is or is not listed rather than that a particular number of results was returned.
 
-**The price range filter is not covered.** Automating a two-handle slider is the remaining
-piece of work; the filter's behaviour is documented in exploratory charter 1.
+**The catalogue re-filters asynchronously after a slider change.** Pressing a key again
+before that completes leaves the product list behind the slider position, so a test driving
+the slider has to pause between presses. There is nothing observable to wait for — the
+handle's value updates immediately while the list updates on its own schedule — so this is
+the one place in the suite with a fixed delay rather than a condition.
 
 **The postcode lookup API test is written but not finished.** It documents BUG-001 using
 `test.fail()`, so that the suite reports an error if the defect is ever fixed and the

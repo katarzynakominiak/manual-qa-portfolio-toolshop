@@ -54,4 +54,44 @@ test.describe("filters", () => {
       filtersComponent.product(differentBrandProductName),
     ).toHaveCount(0);
   });
+  // --- add near the top of tests/ui/filters.spec.ts, above test.describe ---
+
+  // Requires at least one price: every() returns true for an empty array, so a broken
+  // price locator would otherwise produce a passing assertion.
+  const allWithinRange = (values: number[], min: number, max: number) =>
+    values.length > 0 && values.every((v) => v >= min && v <= max);
+
+  // --- add as a new test inside the existing describe block ---
+
+  test("filtering by price range shows only products within the selected range", async () => {
+    // Arrange
+    const initialMin = await filtersComponent.getSliderValue(
+      filtersComponent.sliderMin,
+    );
+
+    // Act
+    await filtersComponent.moveSlider(filtersComponent.sliderMin, "PageUp", 3);
+
+    // Assert
+    // Both the range and the list are read on every attempt, so a moment where the
+    // slider has moved but the list has not yet re-filtered simply retries.
+    await expect
+      .poll(async () => {
+        const min = await filtersComponent.getSliderValue(
+          filtersComponent.sliderMin,
+        );
+        const max = await filtersComponent.getSliderValue(
+          filtersComponent.sliderMax,
+        );
+        return allWithinRange(await filtersComponent.getPrices(), min, max);
+      })
+      .toBe(true);
+
+    // The handle must actually have moved, otherwise the range above is the full scale
+    // and every product would satisfy it.
+    const min = await filtersComponent.getSliderValue(
+      filtersComponent.sliderMin,
+    );
+    expect(min).toBeGreaterThan(initialMin);
+  });
 });

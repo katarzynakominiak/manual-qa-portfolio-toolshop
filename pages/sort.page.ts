@@ -1,4 +1,5 @@
 import { Page, Locator } from "@playwright/test";
+import { readPrices } from "../utils/prices";
 
 export class SortComponent {
   readonly productPrices: Locator;
@@ -8,8 +9,8 @@ export class SortComponent {
     this.productPrices = this.page.getByTestId("product-price");
     this.sortSelect = this.page.getByTestId("sort");
   }
+
   async getPrices(): Promise<number[]> {
-    const texts = await this.productPrices.allTextContents();
-    return texts.map((t) => parseFloat(t.replace(/[^0-9.]/g, "")));
+    return readPrices(this.productPrices);
   }
 }
