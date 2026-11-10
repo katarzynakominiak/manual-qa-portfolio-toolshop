@@ -82,4 +82,13 @@ test.describe("contact form", () => {
       await expect(contactPage.confirmationMessage).toBeHidden();
     });
   }
+  test("rejects an email address in an invalid format", async () => {
+    // Act
+    await contactPage.fillForm(contactData.invalidEmail);
+    await contactPage.sendButton.click();
+
+    // Assert
+    await expect(contactPage.errors.email).toHaveText("Email format is invalid");
+    await expect(contactPage.confirmationMessage).toBeHidden();
+  });
 });
