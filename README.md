@@ -1,23 +1,24 @@
-# Manual QA Portfolio — Practice Software Testing (Toolshop)
+# QA Portfolio — Practice Software Testing (Toolshop)
 
-Manual testing project for the demo e-commerce application
-[practicesoftwaretesting.com](https://practicesoftwaretesting.com/) — a tool shop
-with product catalogue, filtering, cart, checkout, user accounts and a contact form.
+Testing project for the demo e-commerce application
+[practicesoftwaretesting.com](https://practicesoftwaretesting.com/) — a tool shop with a
+product catalogue, filtering, cart, checkout, user accounts and a contact form.
 
-The goal of this repository is to document a complete manual testing cycle:
-planning, test design, execution, defect reporting and a final report.
+The repository documents a complete testing cycle: planning, test design, manual execution,
+defect reporting, a final report, and an automated Playwright suite covering the areas where
+automation does the job better.
 
 ## What's inside
 
 | Path | Contents |
 |---|---|
 | [`docs/test-plan.md`](docs/test-plan.md) | Scope, approach, environment, risks, entry/exit criteria |
-| [`docs/test-cases.md`](docs/test-cases.md) | Test cases per functional area |
+| [`docs/test-cases.md`](docs/test-cases.md) | Test cases per functional area, and which are automated |
 | [`docs/exploratory-charters.md`](docs/exploratory-charters.md) | Session-based exploratory testing charters and notes |
 | [`bugs/`](bugs/) | Individual defect reports |
-| [`docs/test-report.md`](docs/test-report.md) | Final summary: coverage, defect statistics, quality risks |
-| [`screenshots/`](screenshots/) | Evidence attached to defect reports |
+| [`docs/test-report.md`](docs/test-report.md) | Final summary: coverage, defect patterns, quality risks |
 | [`tests/`](tests/) | Automated Playwright suite — see its [README](tests/README.md) for coverage and design notes |
+| [`screenshots/`](screenshots/) | Evidence attached to defect reports |
 
 ## Scope of testing
 
@@ -42,21 +43,38 @@ planning, test design, execution, defect reporting and a final report.
 
 ## Summary of results
 
+### Manual testing
+
 | Metric | Value |
 |---|---|
-| Test cases executed | 8 of 17 |
+| Test cases executed | 8 |
 | Passed / Failed | 8 / 0 |
+| Exploratory sessions | 2 charters, 90 min |
 | Defects reported | 10 |
 | Critical / Major / Minor | 0 / 2 / 8 |
 
-Nine test cases are covered by the automated suite rather than executed manually — see the
-[test cases](docs/test-cases.md) for how coverage is split.
+Registration, the cart and the checkout flow were tested by hand, because the defects there
+concern what the user is shown and when. See the
+[final test report](docs/test-report.md) for coverage, defect patterns and recommendations.
 
-See the [final test report](docs/test-report.md) for coverage, defect patterns and
-recommendations.
+### Automated testing
+
+| Metric | Value |
+|---|---|
+| Tests | 15 |
+| Areas | Contact form, search, catalogue filtering, sorting |
+| Browsers | Chromium, Firefox, WebKit |
+
+The catalogue, search and contact form are covered by the Playwright suite in
+[`tests/`](tests/) rather than by hand — they are data-driven and repetitive, which
+automation exercises more thoroughly than a person does. The suite's
+[README](tests/README.md) explains how coverage is split and which properties of the
+application shaped the test design.
 
 ## About
 
-Manual testing project built as a portfolio piece by a QA Engineer with commercial
-experience in pre-release testing of mobile, tablet and wearable software.
-ISTQB CTFL and ISTQB CT-AI certified.
+A portfolio project by a QA Engineer with commercial experience in pre-release testing of
+mobile, tablet and wearable software. ISTQB CTFL and ISTQB CT-AI certified.
+
+Manual testing came first and shaped what was automated: eight of the ten defects recorded
+here were found by hand, including both of the serious ones.

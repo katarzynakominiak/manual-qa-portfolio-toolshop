@@ -19,22 +19,32 @@ than a person does. Cases marked `Not run` below are covered there, not skipped.
 | TC-004 | Log in with an invalid password | A registered account exists | 1. Open login page<br>2. Enter a valid e-mail and a wrong password<br>3. Submit | Login is rejected with a clear error message; no indication of which field was wrong | Pass | |
 
 ## Product catalogue and filtering
-> Covered by the automated suite — see `tests/`.
 
-| ID | Title | Preconditions | Steps | Expected result | Status | Defect |
-|---|---|---|---|---|---|---|
-| TC-010 | Filter by a single category | Home page is open | 1. Select one category filter | Only products from that category are displayed | Not run||
-| TC-011 | Combine category and brand filters | Home page is open | 1. Select a category<br>2. Select a brand | Only products matching both criteria are displayed| Not run| |
-| TC-012 | Price range filter boundaries | Home page is open | 1. Set the price range to the lowest possible values | Only products within the range are displayed; no product above the maximum appears |  Not run| |
-| TC-013 | Sorting | Home page is open | 1. Apply each available sort option | Products are ordered correctly for each option | Not run| |
+> Covered by the automated suite — see [`tests/ui/filters.spec.ts`](../tests/ui/filters.spec.ts)
+> and [`tests/ui/sort.spec.ts`](../tests/ui/sort.spec.ts).
+
+| ID | Title | Expected result | Status | Automated test |
+|---|---|---|---|---|
+| TC-010 | Filter by a single category | Only products from that category are displayed | Pass | `filtering successfully by one category` |
+| TC-011 | Combine category and brand filters | Only products matching both criteria are displayed | Pass | `filtering by category and brand shows only products matching both` |
+| TC-012 | Price range filter | Only products within the selected range are displayed | Pass | `filtering by price range shows only products within the selected range` |
+| TC-013 | Sorting | Products are ordered correctly for each option | Pass | `lists products in ascending price order`, `lists products in descending price order` |
+
+Boundary behaviour of the price filter — a product at the exact limit, a minimum equal to the
+maximum, the full range — was examined manually in
+[exploratory charter 1](exploratory-charters.md). The automated test covers the general case.
 
 ## Search
-> Covered by the automated suite — see `tests/`.
+> Covered by the automated suite — see [`tests/ui/search.spec.ts`](../tests/ui/search.spec.ts).
 
-| ID | Title | Preconditions | Steps | Expected result | Status | Defect |
-|---|---|---|---|---|---|---|
-| TC-020 | Search for an existing product | Home page is open | 1. Enter the exact name of a known product<br>2. Submit | The product appears in the results | Not run | |
-| TC-021 | Search for a non-existing product | Home page is open | 1. Enter a random string<br>2. Submit | An empty-state message is shown instead of an error or a blank page | Not run | |
+| ID | Title | Expected result | Status | Automated test |
+|---|---|---|---|---|
+| TC-020 | Search for an existing product | The product appears in the results | Pass | `search successfully with valid data` |
+| TC-021 | Search for a non-existing product | An empty-state message is shown instead of an error or a blank page | Pass | `displaying no results after searching with invalid data` |
+
+One further case is covered beyond those planned: `does nothing when search is submitted with
+an empty query`, which records the application's current behaviour when the Search button is
+pressed with no search term.
 
 ## Cart and checkout
 
@@ -46,10 +56,16 @@ than a person does. Cases marked `Not run` below are covered there, not skipped.
 | TC-033 | Complete the checkout flow | The cart contains a product and the user is logged in | 1. Open the cart<br> 2. Go through every checkout step<br> 3. Place the order | The order is placed and a confirmation is displayed | Pass| BUG-006, BUG-007, BUG-008
 
 ## Contact form
-> Covered by the automated suite — see `tests/`.
+> Covered by the automated suite — see
+> [`tests/ui/contact-form.spec.ts`](../tests/ui/contact-form.spec.ts).
 
-| ID | Title | Preconditions | Steps | Expected result | Status | Defect |
-|---|---|---|---|---|---|---|
-| TC-040 | Submit with all required fields | Contact page is open | 1. Fill all required fields<br>2. Submit | A confirmation message is displayed | Not run | |
-| TC-041 | Submit with an empty required field | Contact page is open | 1. Leave one required field empty<br>2. Submit | A validation message points to the empty field; the form is not submitted | Not run | |
-| TC-042 | Submit with an invalid e-mail format | Contact page is open | 1. Enter an e-mail without `@`<br>2. Submit | A validation message about the e-mail format is displayed | Not run | |
+| ID | Title | Expected result | Status | Automated test |
+|---|---|---|---|---|
+| TC-040 | Submit with all required fields | A confirmation message is displayed | Pass | `submits successfully with valid data` |
+| TC-041 | Submit with an empty required field | A validation message points to the empty field; the form is not submitted | Pass | `shows a validation error for every required field when submitted empty`, plus one generated test per field |
+| TC-042 | Submit with an invalid e-mail format | A validation message about the e-mail format is displayed | Pass | `rejects an email address in an invalid format` |
+
+TC-041 is covered twice over. One test submits an entirely empty form; four further tests are
+generated from a list of required fields, each filling the form correctly and then clearing a
+single field. The subject is excluded from the generated set because its `<select>` offers no
+empty option once a category has been chosen, so a user cannot clear it.

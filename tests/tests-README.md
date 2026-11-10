@@ -58,7 +58,7 @@ something a scripted run never does.
 
 ## Application behaviour that affects how these tests are written
 
-Four properties of this application shaped the test design. Each cost an hour or more to
+Five properties of this application shaped the test design. Each cost an hour or more to
 discover, so they are recorded here rather than learned again.
 
 **Validation messages appear only after a submit attempt.** Clearing a required field and
@@ -86,6 +86,19 @@ text.
 `category-01M702WMN3HXRB005VERFCXSH1`. These change when the catalogue data is reseeded, which
 has happened during this project. Filters are located by their visible label instead.
 
+**The catalogue re-filters asynchronously after a slider change.** Pressing a key again
+before that completes leaves the product list behind the slider position: the handle reports
+its new value immediately while the list is still filtered by the previous one. There is
+nothing observable to wait for — both the handle and the list are in valid states, they
+simply disagree — so this is the one place in the suite with a fixed delay between actions
+rather than a condition to wait on.
+
+**The slider handles cannot be located by role and name.** Both carry the same
+`aria-label` ("ngx-slider") and an empty `aria-labelledby`, which takes precedence in the
+accessible name computation and leaves the name blank. They are located by the library's own
+`ngx-slider-pointer-min` and `ngx-slider-pointer-max` classes instead — class names that
+identify which handle a span is, rather than how it looks.
+
 ## Known limitations
 
 **Results are checked on the first page only.** The catalogue is paginated, so a product that
@@ -97,11 +110,11 @@ first page and was confirmed manually on the others.
 same application, who create products, brands and accounts in it. Tests assert that a specific
 product is or is not listed rather than that a particular number of results was returned.
 
-**The catalogue re-filters asynchronously after a slider change.** Pressing a key again
-before that completes leaves the product list behind the slider position, so a test driving
-the slider has to pause between presses. There is nothing observable to wait for — the
-handle's value updates immediately while the list updates on its own schedule — so this is
-the one place in the suite with a fixed delay rather than a condition.
+**The price range filter is covered in general but not at its boundaries.** The automated
+test moves the lower bound and checks that every listed price falls inside the range the
+slider reports. Boundary behaviour — a product priced exactly at the limit, a minimum equal
+to the maximum, the full range — was examined manually and is recorded in exploratory
+charter 1.
 
 **The postcode lookup API test is written but not finished.** It documents BUG-001 using
 `test.fail()`, so that the suite reports an error if the defect is ever fixed and the
